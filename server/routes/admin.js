@@ -28,6 +28,27 @@ const authMiddleware = (req, res, next) => {
 }
 
 /**
+ * Check Auth
+*/
+const checkAuth = (req, res, next) => {
+    const token = req.cookies.token;
+    res.locals.isAuthenticated = false;
+
+    if(token) {
+        try {
+            const decoded = jwt.verify(token, jwtSecret);
+            req.userId = decoded.userId;
+            res.locals.isAuthenticated = true;
+        } catch (error) {
+            res.locals.isAuthenticated = false;
+        }
+    }
+
+    next();
+};
+
+
+/**
  * GET /
  * Admin - Login Page
 */
@@ -212,3 +233,4 @@ router.get('/logout', (req, res) => {
 })
 
 module.exports = router;
+module.exports.checkAuth = checkAuth;

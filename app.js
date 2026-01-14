@@ -8,6 +8,7 @@ const connectDB = require('./server/config/db');
 const { isActiveRoute } = require('./server/helpers/routeHelpers');
 const session = require('express-session');
 const { default: MongoStore } = require('connect-mongo');
+const { checkAuth } = require('./server/routes/admin');
 
 const app = express();
 const PORT = 5000 || process.env.PORT;
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(methodOverride('_method'));
+app.use(checkAuth);
 
 app.use(session({
     secret: 'keyboard cat',

@@ -14,23 +14,26 @@ router.get('', async (req, res) => {
         }
 
         let perPage = 5;
-        let page = req.query.page || 1;
+        let page = parseInt(req.query.page) || 1;
 
         const data = await Post.aggregate([ { $sort: { createdAt: -1 } }])
-            .skip(perPage * page - perPage)
-            .limit(perPage)
-            .exec();
+            .skip(perPage * (page-1))
+            .limit(perPage);
             
         const count = await Post.countDocuments();
-        const nextPage = parseInt(page) + 1;
+        const totalPages = Math.ceil(count/perPage);
+    
 
-        const hasNextPage = nextPage <= Math.ceil(count / perPage);
+        const hasNextPage = page < totalPages;
+        const hasPrevPage = page > 1;
+
         res.render('index', { 
             locals, 
             data,
             current: page,
             currentRoute: '/',
-            nextPage: hasNextPage ? nextPage : null
+            nextPage: hasNextPage ? page + 1 : null,
+            prevPage: hasPrevPage ? page - 1 : null
         });
 
     } catch (error) {

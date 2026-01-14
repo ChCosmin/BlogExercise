@@ -1,5 +1,5 @@
 <header class="header">
-    <a href="/" class="header__logo">NodeJs</a>
+    <a href="/" class="header__logo">Blog</a>
 
     <nav class="header__nav">
         <ul>
@@ -19,5 +19,10 @@
         <button class="searchBtn" aria-expanded="false">
             Search
         </button>
+        <% if (!isAuthenticated) { %>
+            <a href="/admin" class="btn adminLoginBtn">Admin Login</a>
+        <% } else { %>
+            <a href="/dashboard" class="btn adminLoginBtn">Admin dashboard</a>
+        <% } %>
     </div>
 </header>
