@@ -1,0 +1,30 @@
+<div class="author">
+    <h1 class="author__heading">Hi, I am Cosminchi.</h1>
+    <p class="author__body">Web developer</p>
+</div>
+
+<img src="/img/hero-image.webp" alt="alt img" class="hero-image" width="981" height="528" />
+
+<section class="articles">
+    <h2 class="articles__heading">Latest Posts</h2>
+    <ul class="articles-ul">
+        <% data.forEach(post => { %>
+            <li>
+                <a href="/post/<%= post._id %>">
+                    <span><%= post.title %></span>
+                    <span class="articles-list__date"><%= post.createdAt.toDateString() %></span>
+                </a>
+            </li>
+        <% }) %>
+    </ul>
+
+    <div class="articles_pagination">
+        <% if (nextPage !== null) { %>
+            <a href="/?page=<%= nextPage %>" class="pagination-right">&lt; View Older Posts</a> 
+        <% } %>
+ <!-- TODO -->
+        <% if (nextPage >= null) { %> 
+            <a href="/?page=<%= nextPage %>" class="pagination-left">View Newer Posts &gt;</a> 
+        <% } %>    
+    </div>    
+</section>
