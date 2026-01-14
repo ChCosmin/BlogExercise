@@ -96,5 +96,10 @@ router.get('/about', (req, res) => {
         currentRoute: '/about'
     });
 });
+router.get('/contact', (req, res) => {
+    res.render('contact', {
+        currentRoute: '/contact'
+    });
+});
 
 module.exports = router;
